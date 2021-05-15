@@ -20,7 +20,7 @@ TBW, mais c'est +- la même chose que pour Windows
 
 ### Configuration : config.json
 Pour être notifié en temps réel sur Slack, il faut :
-1. Renommer le fichier `config-example.json` en `config.json`
+1. Dans le dossier `ChronodoseWatcher.App\bin\Debug\netcoreapp3.1\` trouver le fichier `config-example.json` et renommer le en `config.json`
 2. Configurer un Webhook de Slack (https://api.slack.com/messaging/webhooks)
 3. Remplace URL du webhook dans le fichier par votre propre URL.
 ```
