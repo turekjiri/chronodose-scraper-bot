@@ -7,10 +7,14 @@
 
   <ItemGroup>
     <None Remove="config-example.json" />
+    <None Remove="config.json" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Include="config-example.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="config.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
