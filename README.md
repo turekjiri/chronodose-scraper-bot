@@ -9,7 +9,7 @@
 #### Windows 
 0. Assurez-vous que vous avez le .NET Core 3.1 (https://dotnet.microsoft.com)
 1. Télécharger la dernière Release depuis Github [https://github.com/turekjiri/chronodose-scraper-bot/releases] 
-2. Exécuter ChronodoseWatcher.App.exe (pour la configuration des notifications, cf. Configuration)
+2. Exécuter `ChronodoseWatcher.App.exe` (pour la configuration des notifications, cf. Configuration)
 
 #### Linux
 TBW, mais c'est +- la même chose que pour Windows
