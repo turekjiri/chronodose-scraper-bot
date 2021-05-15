@@ -5,6 +5,9 @@
 ### TechStack
 - C# .NET Core 3.1
 
+[![forthebadge](https://forthebadge.com/images/badges/powered-by-black-magic.svg)](https://forthebadge.com)
+
+
 ### Exécution
 #### Windows 
 0. Assurez-vous que vous avez le .NET Core 3.1 (https://dotnet.microsoft.com)
