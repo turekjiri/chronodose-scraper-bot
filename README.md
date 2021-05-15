@@ -1,5 +1,5 @@
 # Chronodose scraper bot pour Doctolib
-- Bot pour récupérer les chronodoses sur le site de Doctolib
+- Bot pour récupérer les chronodoses sur le site https://www.doctolib.fr/
 - Semble être plus précis que les sites tel que https://vitemadose.covidtracker.fr/, car basé directement sur la recherche en temps réel de Doctolib.
 
 ### TechStack
