@@ -267,13 +267,23 @@ namespace ChronodoseWatcher.App
         /// <param name="isException"></param>
         private void SendWebhook(string msg, bool isException = false)
         {
-            if (_config.Slack != null && _config.Slack.NotifySlack)
+            try
             {
-                if (!isException || (isException && _config.Slack.SendErrors))
+
+                if (_config.Slack != null && _config.Slack.NotifySlack)
                 {
-                    new WebClient().UploadValues(_config.Slack.WebhookURL, "POST", new NameValueCollection { ["payload"] = JsonConvert.SerializeObject(new Payload(msg)) });
+                    if (!isException || (isException && _config.Slack.SendErrors))
+                    {
+                        new WebClient().UploadValues(_config.Slack.WebhookURL, "POST",
+                            new NameValueCollection {["payload"] = JsonConvert.SerializeObject(new Payload(msg))});
+                    }
                 }
             }
+            catch (Exception e)
+            {
+                Console.WriteLine($"ERREUR : échec d'envoi de notification : {e.Message}");
+            }
+
         }
     }
 }
