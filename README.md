@@ -1,8 +1,22 @@
 # Chronodose scraper bot pour Doctolib
-**TechStack : C# .NET Core 3.1**
+- Bot pour récupérer les chronodoses sur le site de Doctolib
+- Semble être plus rapide que les sites tel que https://vitemadose.covidtracker.fr/, car basé directement sur la recherche en temps réel de Doctolib.
 
-Bot pour récupérer les chronodoses sur le site de Doctolib. 
-Semble être plus rapide que les sites tel que https://vitemadose.covidtracker.fr/, car basé sur la recherche en temps réel de Doctolib.
+### TechStack
+- C# .NET Core 3.1
+
+### Exécution
+#### Windows 
+0. Assurez-vous que vous avez le .NET Core 3.1 (https://dotnet.microsoft.com)
+1. Télecharger le code source en .zip, ou clonner le repo.
+2. Ouvrer un CMD/Powersheel dans le dossier du projet (celui qui contient le fichier `ChronodoseWatcher.sln`)
+3. Builder le projet en exécutant la commande `dotnet build`
+4. Allez dans le dossier `..ChronodoseWatcher.App\bin\Debug\netcoreapp3.1\`
+5. Exécuter `ChronodoseWatcher.App.exe` (pour la configuration des notifications, cf. Configuration)
+6. Profiter :)
+
+#### Linux
+TBW, mais c'est +- la même chose que pour Windows
 
 ### Configuration : config.json
 Pour être notifié en temps réel sur Slack, il faut :
@@ -22,6 +36,7 @@ Pour être notifié en temps réel sur Slack, il faut :
 En plus des notifications et l'affichage dans la ligne de commande, tous les résultats dans enregistrés dans le fichier `output-*date*-*ville*.log`.
 
 ### Limitations
-- Pas de GUI, uniquement en ligne de commande.
+- Les résultats de recherche sont aussi à jour que la recherche directement sur Doctolib. Si Doctolib ne suit pas, bot non plus (et ça arrive plus souvent qu'on imagine)
+- Pas de GUI, uniquement en ligne de commande
 - Dépendant de Doctolib, peut donc arrêter de fonctionner à tout moment si Doctolib change leur fonctionnement
 - **Aucune garantie de quoi que ce soit, utilisation à vos risques et périls**
