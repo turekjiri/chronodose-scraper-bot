@@ -4,7 +4,7 @@
 Bot pour récupérer les chronodoses sur le site de Doctolib. 
 Semble être plus rapide que les sites tel que https://vitemadose.covidtracker.fr/, car basé sur la recherche en temps réel de Doctolib.
 
-### configuration : config.json
+### Configuration : config.json
 Pour être notifié en temps réel sur Slack, il faut :
 1. Renommer le fichier `config-example.json` en `config.json`
 2. Configurer un Webhook de Slack (https://api.slack.com/messaging/webhooks)
