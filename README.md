@@ -26,7 +26,7 @@ Ou utilisez tout simplement Visual Studio :)
 
 ### Linux
 #### Compilation depuis les sources
-0. Assurez-vous d'avoir le SDK de .NET Core 3.1 (https://dotnet.microsoft.com)
+0. Assurez-vous d'avoir le SDK de .NET Core 3.1 (https://docs.microsoft.com/en-us/dotnet/core/install/linux)
 1. Télecharger le code source en .zip, ou cloner le repo.
 2. Dans le répertoire contenant le fichier `ChronodoseWatcher.sln` lancer la commande `dotnet build`
 3. Lancer l'application `./bin/Debug/netcoreapp3.1/ChronodoseWatcher.App` (pour la configuration des notifications, cf. Configuration)
