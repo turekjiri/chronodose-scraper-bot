@@ -7,23 +7,29 @@
 
 [![forthebadge](https://forthebadge.com/images/badges/powered-by-black-magic.svg)](https://forthebadge.com)
 
-
-### Exécution
-#### Windows 
-0. Assurez-vous que vous avez le .NET Core 3.1 (https://dotnet.microsoft.com)
+### Windows 
+#### Exécution
+0. Assurez-vous que vous avez au moins le runtime de .NET Core 3.1 (https://dotnet.microsoft.com)
 1. Télécharger la dernière Release depuis Github [https://github.com/turekjiri/chronodose-scraper-bot/releases] 
 2. Exécuter `ChronodoseWatcher.App.exe` (pour la configuration des notifications, cf. Configuration)
 
-#### Linux
-TBW, mais c'est +- la même chose que pour Windows
-
-### Compilation depuis les sources
-0. Assurez-vous que vous avez le .NET Core 3.1 (https://dotnet.microsoft.com)
+#### Compilation depuis les sources 
+0. Assurez-vous que vous avez le SDK de .NET Core 3.1 (https://dotnet.microsoft.com)
 1. Télecharger le code source en .zip, ou cloner le repo.
 2. Ouvrer un CMD/Powersheel/Terminal/... dans le dossier du projet (celui qui contient le fichier `ChronodoseWatcher.sln`)
 3. Builder le projet en exécutant la commande `dotnet build`
 4. Allez dans le dossier `..ChronodoseWatcher.App\bin\Debug\netcoreapp3.1\`
 5. Exécuter `ChronodoseWatcher.App.exe` (pour la configuration des notifications, cf. Configuration)
+
+Ou utilisez tout simplement Visual Studio :)
+
+### Linux
+#### Compilation depuis les sources
+0. Assurez-vous que vous avez le SDK de .NET Core 3.1 (https://dotnet.microsoft.com)
+1. Télecharger le code source en .zip, ou cloner le repo.
+2. Dans le répertoire contenant le fichier `ChronodoseWatcher.sln` lancer dotnet build
+3. Lancer l'application `./bin/Debug/netcoreapp3.1/ChronodoseWatcher.App` (pour la configuration des notifications, cf. Configuration)
+
 
 ### Configuration : config.json
 Pour être notifié en temps réel sur Slack, il faut :
