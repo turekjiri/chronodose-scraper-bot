@@ -20,7 +20,7 @@ TBW, mais c'est +- la même chose que pour Windows
 ### Compilation depuis les sources
 0. Assurez-vous que vous avez le .NET Core 3.1 (https://dotnet.microsoft.com)
 1. Télecharger le code source en .zip, ou cloner le repo.
-2. Ouvrer un CMD/Powersheel dans le dossier du projet (celui qui contient le fichier `ChronodoseWatcher.sln`)
+2. Ouvrer un CMD/Powersheel/Terminal/... dans le dossier du projet (celui qui contient le fichier `ChronodoseWatcher.sln`)
 3. Builder le projet en exécutant la commande `dotnet build`
 4. Allez dans le dossier `..ChronodoseWatcher.App\bin\Debug\netcoreapp3.1\`
 5. Exécuter `ChronodoseWatcher.App.exe` (pour la configuration des notifications, cf. Configuration)
