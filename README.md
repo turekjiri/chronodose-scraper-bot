@@ -14,7 +14,7 @@
 #### Linux
 TBW, mais c'est +- la même chose que pour Windows
 
-### Compiler depuis les sources
+### Compilation depuis les sources
 0. Assurez-vous que vous avez le .NET Core 3.1 (https://dotnet.microsoft.com)
 1. Télecharger le code source en .zip, ou cloner le repo.
 2. Ouvrer un CMD/Powersheel dans le dossier du projet (celui qui contient le fichier `ChronodoseWatcher.sln`)
