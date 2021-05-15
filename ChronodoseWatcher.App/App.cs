@@ -33,16 +33,11 @@ namespace ChronodoseWatcher.App
         public App()
         {
             _appStartTime = DateTime.Now;
+            _config = LoadConfigFromFile(_config_file);
 
-            if (File.Exists(_config_file))
-            {
-                _config = JsonConvert.DeserializeObject<Config>(File.ReadAllText(@"config.json"));
-            }
-            else
-            {
-                Console.WriteLine($"ERREUR : Fichier {_config_file} n'existe pas. Pour être notifié, il faut renommer le fichier config-exemple.json en config.json et y spécifier votre paramétrage souhaité.");
-                _config = new Config(); // init empty config
-            }
+            // Slack test
+            Console.WriteLine("Démarrage du bot - si vous avez paramétré les notifications, vous devriez en recevoir une dans quelques secondes...");
+            SendWebhook("Démarrage du bot - test de notifications !");
 
             Run();
         }
@@ -90,9 +85,37 @@ namespace ChronodoseWatcher.App
                 catch (Exception e)
                 {
                     _logger.WriteLine(e.Message);
-                    SendWebhook(e.Message);
+                    SendWebhook(e.Message, true);
                 }
             }
+        }
+
+        /// <summary>
+        /// Initier la configuration depuis fichier
+        /// </summary>
+        /// <param name="configFile"></param>
+        /// <returns></returns>
+        private Config LoadConfigFromFile(string configFile)
+        {
+            Config config = null;
+
+            try
+            {
+                if (File.Exists(_config_file))
+                {
+                    config = JsonConvert.DeserializeObject<Config>(File.ReadAllText(@"config.json"));
+                }
+                else
+                {
+                    Console.WriteLine($"ERREUR : Fichier {_config_file} n'existe pas. Pour être notifié, il faut renommer le fichier config-exemple.json en config.json et y spécifier votre paramétrage souhaité");
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"ERREUR lors de la récupération du fichier de config : {e.Message}");
+            }
+
+            return config ??= new Config(); // si null, init default config
         }
 
         /// <summary>
@@ -218,7 +241,7 @@ namespace ChronodoseWatcher.App
                     var log = $"{_logger.GetFormattedDateTime()} | {iteration} {i + 1}/{ids.Count} | Centre {id} : {e.Message}";
 
                     _logger.WriteLine(log);
-                    SendWebhook(log);
+                    SendWebhook(log, true);
                 }
             }
         }
@@ -237,16 +260,19 @@ namespace ChronodoseWatcher.App
         }
 
 
-
         /// <summary>
         /// Send msg to Slack
         /// </summary>
         /// <param name="msg"></param>
-        private void SendWebhook(string msg)
+        /// <param name="isException"></param>
+        private void SendWebhook(string msg, bool isException = false)
         {
             if (_config.Slack != null && _config.Slack.NotifySlack)
             {
-                new WebClient().UploadValues(_config.Slack.WebhookURL, "POST", new NameValueCollection { ["payload"] = JsonConvert.SerializeObject(new Payload(msg)) });
+                if (!isException || (isException && _config.Slack.SendErrors))
+                {
+                    new WebClient().UploadValues(_config.Slack.WebhookURL, "POST", new NameValueCollection { ["payload"] = JsonConvert.SerializeObject(new Payload(msg)) });
+                }
             }
         }
     }
