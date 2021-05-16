@@ -40,14 +40,14 @@ Pour être notifié en temps réel sur Slack, il faut :
 ```
 {
     "slack": {
-        "notify_slack" :  true, 
+        "notify_slack" : true, 
         "webhook_url": "https://hooks.slack.com/services/AAA/BBBBB",
         "send_errors": false
     }
 }
 ```
-### Log : output-*date*-*ville*.log
-En plus des notifications et l'affichage dans la ligne de commande, tous les résultats dans enregistrés dans le fichier `output-*date*-*ville*.log`.
+### Log : output-*date*.log
+En plus des notifications et l'affichage dans la ligne de commande, tous les résultats dans enregistrés dans le fichier `output-*date_de_lancement_du_bot*.log`.
 
 ### Limitations
 - Les résultats de recherche sont aussi à jour que la recherche directement sur Doctolib. Si Doctolib ne suit pas, bot non plus (et ça arrive plus souvent qu'on imagine)
