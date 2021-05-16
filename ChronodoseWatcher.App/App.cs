@@ -22,8 +22,16 @@ namespace ChronodoseWatcher.App
         private readonly string _cityKey = "{city}";
         private readonly string _pageKey = "{page}";
         private readonly string _centreIdKey = "{centreId}";
-        private string _doctolibSearchURL => $"https://www.doctolib.fr/vaccination-covid-19/{_cityKey}?ref_visit_motive_ids[]=6970&ref_visit_motive_ids[]=7005&force_max_limit=2&page={_pageKey}";
-        private string _doctolibSentryURL => $"https://www.doctolib.fr/search_results/{_centreIdKey}.json?ref_visit_motive_ids%5B%5D=6970&ref_visit_motive_ids%5B%5D=7005&speciality_id=5494&search_result_format=json&force_max_limit=2";
+        private string _doctolibSearchURL => $"https://www.doctolib.fr/vaccination-covid-19/{_cityKey}?" +
+                                             $"ref_visit_motive_ids[]=6970" +
+                                             $"&ref_visit_motive_ids[]=7005" +
+                                             $"&force_max_limit=2&page={_pageKey}";
+        private string _doctolibSentryURL => $"https://www.doctolib.fr/search_results/{_centreIdKey}.json?" +
+                                             $"ref_visit_motive_ids[]=6970" +
+                                             $"&ref_visit_motive_ids[]=7005" +
+                                             $"&speciality_id=5494" +
+                                             $"&search_result_format=json" +
+                                             $"&force_max_limit=2";
 
         private string _city;
 
@@ -187,7 +195,7 @@ namespace ChronodoseWatcher.App
                     // Premier truc à faire => notifier client
                     if (deserialized.Total > 0)
                     {
-                        _slackClient.SendMessage($"{deserialized.Total} places à {deserialized.Centre.LastName.Trim()} (https://www.doctolib.fr{deserialized?.Centre?.Link}) [{id}]");
+                        _slackClient.SendMessage($"{deserialized.Total} places à {deserialized.Centre.LastName.Trim()} - https://www.doctolib.fr{deserialized.Centre?.Link} [{id}] | [TEST : lien direct https://www.doctolib.fr{deserialized.Centre?.URL}]");
                     }
 
                     var log = $"{_logger.GetFormattedDateTime()} | {iteration} | {i + 1}/{ids.Count} | {_city} | {deserialized.Total} places au { (deserialized.Centre == null ? "Centre NULL" : deserialized.Centre.LastName.Trim())} [{id}]";
