@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30717.126
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChronodoseWatcher.App", "ChronodoseWatcher.App\ChronodoseWatcher.App.csproj", "{FFDD39B0-4B13-4ACC-A754-B73ACA795E6B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChronodoseWatcher.App", "ChronodoseWatcher.App\ChronodoseWatcher.App.csproj", "{FFDD39B0-4B13-4ACC-A754-B73ACA795E6B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChronodoseWatcher.Tests", "ChronodoseWatcher.Tests\ChronodoseWatcher.Tests.csproj", "{5C499374-05C5-44BF-B64B-E75ACCE6F5C9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{FFDD39B0-4B13-4ACC-A754-B73ACA795E6B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FFDD39B0-4B13-4ACC-A754-B73ACA795E6B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FFDD39B0-4B13-4ACC-A754-B73ACA795E6B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5C499374-05C5-44BF-B64B-E75ACCE6F5C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C499374-05C5-44BF-B64B-E75ACCE6F5C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C499374-05C5-44BF-B64B-E75ACCE6F5C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C499374-05C5-44BF-B64B-E75ACCE6F5C9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
