@@ -2,14 +2,12 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Threading;
 using ChronodoseWatcher.App.Models.Configuration;
 using ChronodoseWatcher.App.Models.Doctolib;
-using ChronodoseWatcher.App.Models.Slack;
 
 namespace ChronodoseWatcher.App
 {
@@ -17,9 +15,9 @@ namespace ChronodoseWatcher.App
     {
         private readonly DateTime _appStartTime;
         private readonly Logger _logger;
-
-        private readonly Config _config;
         private readonly string _config_file = "config.json";
+        private readonly Config _config;
+        private readonly SlackClient _slackClient;
 
         private readonly string _cityKey = "{city}";
         private readonly string _pageKey = "{page}";
@@ -37,9 +35,9 @@ namespace ChronodoseWatcher.App
             _appStartTime = DateTime.Now;
             _config = LoadConfigFromFile(_config_file);
             _logger = new Logger(_appStartTime);
+            _slackClient = new SlackClient(_logger, _config);
 
-            Console.WriteLine("Démarrage du bot - si vous avez paramétré les notifications, vous devriez en recevoir une dans quelques instants...");
-            SendWebhook("Démarrage du bot - test de notifications !");
+            InitCity();
         }
 
         /// <summary>
@@ -47,8 +45,6 @@ namespace ChronodoseWatcher.App
         /// </summary>
         public void Run()
         {
-            InitCity();
-
             var stop = false;
             var i = 1;
             while (!stop) // never stop :)
@@ -59,7 +55,7 @@ namespace ChronodoseWatcher.App
                     Console.WriteLine($"################## ITERATION {i} ##################");
 
                     var idList = GetSearchResultIDs();
-                    Console.WriteLine($"{idList.Count} centres identifiés");
+                    Console.WriteLine($"{idList.Count} centres identifiés autour de {_city}");
                     ProcessIDs(idList, i);
 
                     Thread.Sleep(10000); // Dodo pour 10s pour eviter de se faire ban
@@ -68,7 +64,7 @@ namespace ChronodoseWatcher.App
                 catch (Exception e)
                 {
                     _logger.WriteLine(e.Message);
-                    SendWebhook(e.Message, true);
+                    _slackClient.SendMessage(e.Message, true);
                 }
             }
         }
@@ -109,10 +105,19 @@ namespace ChronodoseWatcher.App
                 if (File.Exists(_config_file))
                 {
                     config = JsonConvert.DeserializeObject<Config>(File.ReadAllText(@"config.json"));
+
+                    if (config == null)
+                        throw new Exception();
+
+                    Console.WriteLine("Fichier de configuration correctement chargé");
+                    Console.WriteLine($"- Notifications Slack : {config.Slack.NotifySlack}");
+                    Console.WriteLine($"- Webhook URL : {config.Slack.WebhookURL}");
+                    Console.WriteLine($"- Send Errors : {config.Slack.SendErrors}");
+                    Console.WriteLine($"- Minimum free places to send notification : {config.Slack.MinimumFreePlacesToNotify} [n'est pas pris en compte pour l'instant]");
                 }
                 else
                 {
-                    Console.WriteLine($"ERREUR : Fichier {_config_file} n'existe pas. Pour être notifié, il faut renommer le fichier config-exemple.json en config.json et y spécifier votre paramétrage souhaité");
+                    Console.WriteLine($"ERREUR : Fichier {_config_file} n'existe pas. Pour être notifié, il faut renommer le fichier config-exemple.json en config.json et y spécifier votre paramétrage");
                 }
             }
             catch (Exception e)
@@ -219,20 +224,20 @@ namespace ChronodoseWatcher.App
                     // Premier truc à faire => notifier client
                     if (deserialized.Total > 0)
                     {
-                        SendWebhook($"Centre {id} | {deserialized.Total} places | https://www.doctolib.fr{deserialized?.Centre?.Link}");
+                        _slackClient.SendMessage($"{deserialized.Total} places à {deserialized.Centre.LastName.Trim()} (https://www.doctolib.fr{deserialized?.Centre?.Link}) [{id}]");
                     }
 
                     var log = $"{_logger.GetFormattedDateTime()} | {iteration} | {i + 1}/{ids.Count} | {_city} | {deserialized.Total} places au { (deserialized.Centre == null ? "Centre NULL" : deserialized.Centre.LastName.Trim())} [{id}]";
                     _logger.WriteLine(log);
 
-                    Thread.Sleep(1000);  // Do not overflow the server
+                    Thread.Sleep(1000);  // Do not overload the server
                 }
                 catch (Exception e)
                 {
                     var log = $"{_logger.GetFormattedDateTime()} | {iteration} | {i + 1}/{ids.Count} | {_city} | ERREUR [{id}] : {e.Message}";
 
                     _logger.WriteLine(log);
-                    SendWebhook(log, true);
+                    _slackClient.SendMessage(log, true);
                 }
             }
         }
@@ -251,28 +256,6 @@ namespace ChronodoseWatcher.App
         }
 
 
-        /// <summary>
-        /// Send msg to Slack
-        /// </summary>
-        /// <param name="msg"></param>
-        /// <param name="isException"></param>
-        private void SendWebhook(string msg, bool isException = false)
-        {
-            try
-            {
-                if (_config.Slack != null && _config.Slack.NotifySlack)
-                {
-                    if (!isException || (isException && _config.Slack.SendErrors))
-                    {
-                        new WebClient().UploadValues(_config.Slack.WebhookURL, "POST",
-                            new NameValueCollection { ["payload"] = JsonConvert.SerializeObject(new Payload(msg)) });
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine($"ERREUR : échec d'envoi de notification : {e.Message}");
-            }
-        }
+
     }
 }
