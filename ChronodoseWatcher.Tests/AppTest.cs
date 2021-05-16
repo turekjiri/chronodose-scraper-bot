@@ -1,14 +1,13 @@
-using System;
 using Xunit;
 
 namespace ChronodoseWatcher.Tests
 {
-    public class UnitTest1
+    public class AppTest
     {
         [Fact]
         public void Test1()
         {
-
+            //TODO
         }
     }
 }
