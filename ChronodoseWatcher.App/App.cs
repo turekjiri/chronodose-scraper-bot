@@ -16,7 +16,7 @@ namespace ChronodoseWatcher.App
     public class App
     {
         private readonly DateTime _appStartTime;
-        private Logger _logger;
+        private readonly Logger _logger;
 
         private readonly Config _config;
         private readonly string _config_file = "config.json";
@@ -34,6 +34,7 @@ namespace ChronodoseWatcher.App
         {
             _appStartTime = DateTime.Now;
             _config = LoadConfigFromFile(_config_file);
+            _logger = new Logger(_appStartTime);
 
             // Slack test
             Console.WriteLine("Démarrage du bot - si vous avez paramétré les notifications, vous devriez en recevoir une dans quelques secondes...");
@@ -64,9 +65,6 @@ namespace ChronodoseWatcher.App
                     cityIsOk = true;
                 }
             }
-
-            // Init logger
-            _logger = new Logger(city, _appStartTime);
 
             // Run scraper
             var stop = false;

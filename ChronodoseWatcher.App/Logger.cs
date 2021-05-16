@@ -7,9 +7,9 @@ namespace ChronodoseWatcher.App
     {
         private string _file;
 
-        public Logger(string city, DateTime appStartTime)
+        public Logger(DateTime appStartTime)
         {
-            _file = $"output-{appStartTime:yyyy-MM-dd_HH-mm-ss}-{city}.log";
+            _file = $"output-{appStartTime:yyyy-MM-dd_HH-mm-ss}.log";
         }
 
         public void Write(string log)
