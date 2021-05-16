@@ -22,7 +22,8 @@ namespace ChronodoseWatcher.App
 
         private void SendWelcome()
         {
-            SendMessage("Bienvenue ! Si vous avez reçu ce message, c'est que vos notifications sont correctement paramétrées");
+            SendMessage("*Bienvenue !*" +
+                        "\nSi vous avez reçu ce message, c'est que vos notifications sont correctement paramétrées");
         }
 
         /// <summary>
