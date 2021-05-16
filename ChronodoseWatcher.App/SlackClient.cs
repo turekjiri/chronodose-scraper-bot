@@ -16,6 +16,13 @@ namespace ChronodoseWatcher.App
         {
             _logger = logger;
             _config = config;
+
+            SendWelcome();
+        }
+
+        private void SendWelcome()
+        {
+            SendMessage("Bienvenue ! Si vous avez reçu ce message, c'est que vos notifications sont correctement paramétrées");
         }
 
         /// <summary>
