@@ -2,6 +2,7 @@
   "slack": {
     "notify_slack" :  true, 
     "webhook_url": "https://hooks.slack.com/services/YYYYY/ZZZZZZZ/XXXXXXXX",
-    "send_errors": false
+    "send_errors": false,
+    "minimum_free_places_to_notify": 0
   }
 }

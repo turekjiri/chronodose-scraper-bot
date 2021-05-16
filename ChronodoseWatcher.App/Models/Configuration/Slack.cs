@@ -12,5 +12,8 @@ namespace ChronodoseWatcher.App.Models.Configuration
 
         [JsonProperty("send_errors")]
         public bool SendErrors { get; set; }
+
+        //[JsonProperty("minimum_free_places_to_notify")]
+        //public int MinimumFreePlacesToNotify { get; set; }
     }
 }
