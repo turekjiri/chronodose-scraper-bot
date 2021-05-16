@@ -14,20 +14,21 @@ namespace ChronodoseWatcher.App
     public class App
     {
         private readonly DateTime _appStartTime;
+
         private readonly Logger _logger;
-        private readonly string _config_file = "config.json";
         private readonly Config _config;
         private readonly SlackClient _slackClient;
 
         private readonly string _cityKey = "{city}";
         private readonly string _pageKey = "{page}";
         private readonly string _centreIdKey = "{centreId}";
-        private string _doctolibSearchURL => $"https://www.doctolib.fr/vaccination-covid-19/{_cityKey}?" +
-                                             $"ref_visit_motive_ids[]=6970" +
+        private string _doctolibSearchURL => $"https://www.doctolib.fr/vaccination-covid-19/{_cityKey}" +
+                                             $"?ref_visit_motive_ids[]=6970" +
                                              $"&ref_visit_motive_ids[]=7005" +
-                                             $"&force_max_limit=2&page={_pageKey}";
-        private string _doctolibSentryURL => $"https://www.doctolib.fr/search_results/{_centreIdKey}.json?" +
-                                             $"ref_visit_motive_ids[]=6970" +
+                                             $"&force_max_limit=2" +
+                                             $"&page={_pageKey}";
+        private string _doctolibSentryURL => $"https://www.doctolib.fr/search_results/{_centreIdKey}.json" +
+                                             $"?ref_visit_motive_ids[]=6970" +
                                              $"&ref_visit_motive_ids[]=7005" +
                                              $"&speciality_id=5494" +
                                              $"&search_result_format=json" +
@@ -38,10 +39,10 @@ namespace ChronodoseWatcher.App
         /// <summary>
         /// ctor
         /// </summary>
-        public App()
+        public App(string configFilePath)
         {
             _appStartTime = DateTime.Now;
-            _config = Config.LoadConfigFromFile(_config_file);
+            _config = Config.LoadConfigFromFile(configFilePath);
             _logger = new Logger(_appStartTime);
             _slackClient = new SlackClient(_logger, _config);
 
@@ -86,7 +87,9 @@ namespace ChronodoseWatcher.App
             {
                 Console.WriteLine();
                 Console.Write("Merci de saisir votre ville (ex. : Strasbourg) : ");
-                _city = Console.ReadLine()?.ToLower().Replace(" ", "-");
+                _city = Console.ReadLine()?
+                                .Replace(" ", "-")
+                                .ToLower();
 
                 if (GetSearchResultPage(_city, 1) == null)
                 {
@@ -108,7 +111,10 @@ namespace ChronodoseWatcher.App
         {
             try
             {
-                var url = _doctolibSearchURL.Replace(_cityKey, city).Replace(_pageKey, pageNumber.ToString());
+                var url = _doctolibSearchURL
+                                .Replace(_cityKey, city)
+                                .Replace(_pageKey, pageNumber.ToString());
+
                 return new WebClient().DownloadString(url);
             }
             catch
@@ -195,17 +201,28 @@ namespace ChronodoseWatcher.App
                     // Premier truc à faire => notifier client
                     if (deserialized.Total > 0)
                     {
-                        _slackClient.SendMessage($"{deserialized.Total} places à {deserialized.Centre.LastName.Trim()} - https://www.doctolib.fr{deserialized.Centre?.Link} [{id}] | [TEST : lien direct https://www.doctolib.fr{deserialized.Centre?.URL}]");
+                        _slackClient.SendMessage($"*{deserialized.Total} places* à {deserialized.Centre.LastName.Trim()}" +
+                                                 $" - https://www.doctolib.fr{deserialized.Centre?.Link} [{id}]" +
+                                                 $" | [TEST : lien direct https://www.doctolib.fr{deserialized.Centre?.URL}]");
                     }
 
-                    var log = $"{_logger.GetFormattedDateTime()} | {iteration} | {i + 1}/{ids.Count} | {_city} | {deserialized.Total} places au { (deserialized.Centre == null ? "Centre NULL" : deserialized.Centre.LastName.Trim())} [{id}]";
+                    var log = $"{_logger.GetFormattedDateTime()}" +
+                              $" | {iteration}" +
+                              $" | {i + 1}/{ids.Count}" +
+                              $" | {_city}" +
+                              $" | {deserialized.Total} places au { (deserialized.Centre == null ? "Centre NULL" : deserialized.Centre.LastName.Trim())} [{id}]";
+
                     _logger.WriteLine(log);
 
                     Thread.Sleep(1000);  // Do not overload the server
                 }
                 catch (Exception e)
                 {
-                    var log = $"{_logger.GetFormattedDateTime()} | {iteration} | {i + 1}/{ids.Count} | {_city} | ERREUR [{id}] : {e.Message}";
+                    var log = $"{_logger.GetFormattedDateTime()}" +
+                              $" | {iteration}" +
+                              $" | {i + 1}/{ids.Count}" +
+                              $" | {_city}" +
+                              $" | ERREUR [{id}] : {e.Message}";
 
                     _logger.WriteLine(log);
                     _slackClient.SendMessage(log, true);
@@ -223,7 +240,10 @@ namespace ChronodoseWatcher.App
             htmlDoc.LoadHtml(html);
 
             var divs = htmlDoc.DocumentNode.SelectNodes("//div[@class='dl-search-result']");
-            return divs.Select(d => d.Attributes["id"].Value.Replace("search-result-", "")).ToList();
+            return divs.Select(d => d.Attributes["id"]
+                                        .Value
+                                        .Replace("search-result-", "")
+                    ).ToList();
         }
 
 

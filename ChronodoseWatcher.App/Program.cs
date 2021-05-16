@@ -8,7 +8,7 @@ namespace ChronodoseWatcher.App
         {
             Console.Clear();
 
-            new App().Run();
+            new App("config.json").Run();
 
             Console.WriteLine("Press any key to quit");
             Console.ReadKey();
