@@ -33,7 +33,7 @@ namespace ChronodoseWatcher.App
         public App()
         {
             _appStartTime = DateTime.Now;
-            _config = LoadConfigFromFile(_config_file);
+            _config = Config.LoadConfigFromFile(_config_file);
             _logger = new Logger(_appStartTime);
             _slackClient = new SlackClient(_logger, _config);
 
@@ -89,43 +89,6 @@ namespace ChronodoseWatcher.App
                     cityIsOk = true;
                 }
             }
-        }
-
-        /// <summary>
-        /// Initier la configuration depuis fichier
-        /// </summary>
-        /// <param name="configFile"></param>
-        /// <returns></returns>
-        private Config LoadConfigFromFile(string configFile)
-        {
-            Config config = null;
-
-            try
-            {
-                if (File.Exists(_config_file))
-                {
-                    config = JsonConvert.DeserializeObject<Config>(File.ReadAllText(@"config.json"));
-
-                    if (config == null)
-                        throw new Exception();
-
-                    Console.WriteLine("Fichier de configuration correctement chargé");
-                    Console.WriteLine($"- Notifications Slack : {config.Slack.NotifySlack}");
-                    Console.WriteLine($"- Webhook URL : {config.Slack.WebhookURL}");
-                    Console.WriteLine($"- Send Errors : {config.Slack.SendErrors}");
-                    Console.WriteLine($"- Minimum free places to send notification : {config.Slack.MinimumFreePlacesToNotify} [n'est pas pris en compte pour l'instant]");
-                }
-                else
-                {
-                    Console.WriteLine($"ERREUR : Fichier {_config_file} n'existe pas. Pour être notifié, il faut renommer le fichier config-exemple.json en config.json et y spécifier votre paramétrage");
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine($"ERREUR lors de la récupération du fichier de config : {e.Message}");
-            }
-
-            return config ??= new Config(); // si null, init default config
         }
 
         /// <summary>

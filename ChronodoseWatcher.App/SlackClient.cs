@@ -45,7 +45,9 @@ namespace ChronodoseWatcher.App
             }
             catch (Exception e)
             {
-                _logger.WriteLine($"ERREUR : échec d'envoi de notification : {e.Message}");
+                _logger.WriteLine(e.Message.Contains("404")
+                    ? $"ERREUR : Slack a répondu 404/NotFound, veuillez vérifier l'URL de votre Webhook"
+                    : $"ERREUR : échec d'envoi de notification Slack : {e.Message}");
             }
         }
     }
