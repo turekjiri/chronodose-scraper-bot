@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace ChronodoseWatcher.App
+namespace ChronodoseWatcher.App.Tools
 {
     public class Logger
     {

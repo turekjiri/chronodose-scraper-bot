@@ -5,7 +5,7 @@ using ChronodoseWatcher.App.Models.Configuration;
 using ChronodoseWatcher.App.Models.Slack;
 using Newtonsoft.Json;
 
-namespace ChronodoseWatcher.App
+namespace ChronodoseWatcher.App.Tools
 {
     public class SlackClient
     {

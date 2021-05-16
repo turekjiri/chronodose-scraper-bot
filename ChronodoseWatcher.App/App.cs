@@ -8,6 +8,7 @@ using System.Net;
 using System.Threading;
 using ChronodoseWatcher.App.Models.Configuration;
 using ChronodoseWatcher.App.Models.Doctolib;
+using ChronodoseWatcher.App.Tools;
 
 namespace ChronodoseWatcher.App
 {
