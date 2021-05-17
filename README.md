@@ -49,6 +49,10 @@ Pour être notifié en temps réel sur Slack, il faut :
 ### Log : output-*date*.log
 En plus des notifications et l'affichage dans la ligne de commande, tous les résultats dans enregistrés dans le fichier `output-*date_de_lancement_du_bot*.log`.
 
+### TODO
+- Limiter le rayon d'action à un certain kilométrage, paramétrable via fichier de config
+- Ajoutes d'autres providers de notifications
+
 ### Limitations
 - Les résultats de recherche sont aussi à jour que la recherche directement sur Doctolib. Si Doctolib ne suit pas, bot non plus (et ça arrive plus souvent qu'on imagine)
 - Pas de GUI, uniquement en ligne de commande
