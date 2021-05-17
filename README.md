@@ -51,7 +51,7 @@ En plus des notifications et l'affichage dans la ligne de commande, tous les ré
 
 ### TODO
 - Limiter le rayon d'action à un certain kilométrage, paramétrable via fichier de config
-- Ajoutes d'autres providers de notifications
+- Ajouter d'autres providers de notifications
 
 ### Limitations
 - Les résultats de recherche sont aussi à jour que la recherche directement sur Doctolib. Si Doctolib ne suit pas, bot non plus (et ça arrive plus souvent qu'on imagine)
