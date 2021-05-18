@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Threading;
+using ChronodoseWatcher.App.Business;
 using ChronodoseWatcher.App.Models.Configuration;
 using ChronodoseWatcher.App.Models.Doctolib;
 using ChronodoseWatcher.App.Tools;
@@ -124,29 +125,7 @@ namespace ChronodoseWatcher.App
             }
         }
 
-        /// <summary>
-        /// Get the number of search result pages
-        /// </summary>
-        /// <param name="html"></param>
-        /// <returns></returns>
-        private int ParsePagesCount(string html)
-        {
-            var htmlDoc = new HtmlDocument();
-            htmlDoc.LoadHtml(html);
 
-            var n = htmlDoc.DocumentNode
-                    .SelectNodes("//ul[@class='seo-magical-links']")[0]
-                    .ChildNodes
-                    .Count;
-
-            //TODO Limité à 9 pages pour l'instant
-            if (n > 9)
-            {
-                Console.WriteLine("Recherche a retourné plus que 9 pages => limitation à 9 premières pages");
-                n = 9;
-            }
-            return n;
-        }
 
         /// <summary>
         /// Récupére les ID des résultats de recherche de toutes les pages disponibles (limité à 9 pour l'instant)
@@ -157,7 +136,7 @@ namespace ChronodoseWatcher.App
             var ids = new List<string>();
 
             var firstPage = GetSearchResultPage(_city, 1);
-            var pagesCount = ParsePagesCount(firstPage);
+            var pagesCount = Parser.ParsePagesCount(firstPage);
 
             for (var n = 1; n <= pagesCount; n++)
             {
