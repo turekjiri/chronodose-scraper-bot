@@ -179,7 +179,7 @@ namespace ChronodoseWatcher.App
                         .ReadToEnd());
 
                     // Premier truc à faire => notifier client
-                    if (deserialized.Total > 0)
+                    if (deserialized.Total > 0 && deserialized.Total >= _config.Slack.Threshold)
                     {
                         _slackClient.SendMessage(
                             $"*{deserialized.Total} places* à *{deserialized.Centre.LastName.Trim()}*" +

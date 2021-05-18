@@ -31,7 +31,7 @@ namespace ChronodoseWatcher.App.Models.Configuration
                     Console.WriteLine($"- Notifications Slack : {config.Slack.NotifySlack}");
                     Console.WriteLine($"- Webhook URL : {config.Slack.WebhookURL}");
                     Console.WriteLine($"- Send Errors : {config.Slack.SendErrors}");
-                    Console.WriteLine($"- Minimum free places to send notification : {config.Slack.MinimumFreePlacesToNotify} [n'est pas pris en compte pour l'instant]");
+                    Console.WriteLine($"- Seuil mini de notifications : {config.Slack.Threshold} [vous serez notifié uniquement s'il y a >= de places disponibles]");
                 }
                 else
                 {
