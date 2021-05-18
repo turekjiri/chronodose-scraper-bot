@@ -181,9 +181,11 @@ namespace ChronodoseWatcher.App
                     // Premier truc à faire => notifier client
                     if (deserialized.Total > 0)
                     {
-                        _slackClient.SendMessage($"*{deserialized.Total} places* à *{deserialized.Centre.LastName.Trim()}*" +
-                                                 $"\nhttps://www.doctolib.fr{deserialized.Centre?.Link} [{id}]" +
-                                                 $"\n[TEST : https://www.doctolib.fr{deserialized.Centre?.URL}]");
+                        _slackClient.SendMessage(
+                            $"*{deserialized.Total} places* à *{deserialized.Centre.LastName.Trim()}*" +
+                            $"\nhttps://www.doctolib.fr{deserialized.Centre?.Link} [{id}]"
+                            //+ $"\n[TEST : https://www.doctolib.fr{deserialized.Centre?.URL}]"
+                            );
                     }
 
                     var log = $"{_logger.GetFormattedDateTime()}" +
