@@ -27,8 +27,9 @@ namespace ChronodoseWatcher.App
         private string _doctolibSearchURL => $"https://www.doctolib.fr/vaccination-covid-19/{_cityKey}" +
                                              $"?ref_visit_motive_ids[]=6970" +
                                              $"&ref_visit_motive_ids[]=7005" +
-                                             $"&force_max_limit=2" +
+                                             //$"&force_max_limit=2" +
                                              $"&page={_pageKey}";
+        
         private string _doctolibSentryURL => $"https://www.doctolib.fr/search_results/{_centreIdKey}.json" +
                                              $"?ref_visit_motive_ids[]=6970" +
                                              $"&ref_visit_motive_ids[]=7005" +
